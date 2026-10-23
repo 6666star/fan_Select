@@ -1,0 +1,12 @@
+.venv/
+.vscode/
+__pycache__/
+*.py[cod]
+backend/build*/
+.cloud-build/
+*.zip
+*.log
+.env
+.env.*
+.streamlit/secrets.toml
+data/fans_before_*.db

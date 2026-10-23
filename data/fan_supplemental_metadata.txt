@@ -1,0 +1,80 @@
+# 风机补充基础数据（暂定估算版）
+
+用途：为 C:\Users\star\Desktop\数据 中的 4 个风机型号补齐数据库主表所需字段。
+
+重要说明：
+1. 风量、风压和效率应以原始 CSV 曲线数据为准。
+2. 本文件中的额定转速、电机功率、调速范围和导轨尺寸均为缺少厂家资料时的暂定工程估算值，不得直接作为采购、施工、安全验算或设备定型依据。
+3. 扇叶角度按当前要求统一填写为 0 度。
+4. 获得厂家样本、铭牌或安装图后，应优先替换本文件中的估算值。
+5. image_path 是相对于项目 data 目录的预留路径；当前未发现对应图片文件。
+
+字段说明：
+model_id          风机型号
+series            风机系列
+fan_type          风机类型
+rated_rpm         额定转速，r/min
+rpm_min           最低允许转速，r/min
+rpm_max           最高允许转速，r/min
+motor_kw          单台电机功率，kW
+motor_count       电机数量
+blade_angle_deg   扇叶角度，度
+withdrawable_rail_width_mm  抽出式轨道宽度，mm（单一尺寸值）
+image_path        风机图片相对路径
+data_status       数据状态
+
+------------------------------------------------------------
+model_id=FBCDZ-10-No38LP
+series=FBCDZ-10
+fan_type=counter_rotating
+rated_rpm=590
+rpm_min=295
+rpm_max=590
+motor_kw=710
+motor_count=2
+blade_angle_deg=0
+withdrawable_rail_width_mm=1800
+image_path=images/fans/FBCDZ-10-No38LP.jpg
+data_status=estimated
+
+------------------------------------------------------------
+model_id=FBCDZ-10-No40LP
+series=FBCDZ-10
+fan_type=counter_rotating
+rated_rpm=590
+rpm_min=295
+rpm_max=590
+motor_kw=900
+motor_count=2
+blade_angle_deg=0
+withdrawable_rail_width_mm=2000
+image_path=images/fans/FBCDZ-10-No40LP.jpg
+data_status=estimated
+
+------------------------------------------------------------
+model_id=FBCDZ-12-No33LP
+series=FBCDZ-12
+fan_type=counter_rotating
+rated_rpm=490
+rpm_min=245
+rpm_max=490
+motor_kw=355
+motor_count=2
+blade_angle_deg=0
+withdrawable_rail_width_mm=1600
+image_path=images/fans/FBCDZ-12-No33LP.jpg
+data_status=estimated
+
+------------------------------------------------------------
+model_id=FBCDZ-12-No38LP
+series=FBCDZ-12
+fan_type=counter_rotating
+rated_rpm=490
+rpm_min=245
+rpm_max=490
+motor_kw=560
+motor_count=2
+blade_angle_deg=0
+withdrawable_rail_width_mm=1800
+image_path=images/fans/FBCDZ-12-No38LP.jpg
+data_status=estimated

@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package fanSelector;
+
+// 选型请求：前端传入的矿井工况参数
+message FanSelectionRequest {
+  double airFlowEasy       = 1;   // 容易时期需风量 (m³/s)
+  double pressureEasy      = 2;   // 容易时期通风阻力 (Pa)
+  double airFlowHard       = 3;   // 困难时期需风量 (m³/s)
+  double pressureHard      = 4;   // 困难时期通风阻力 (Pa)
+  double reserveCoeff      = 5;   // 风量备用系数 K
+  double powerMarginCoeff  = 6;   // 功率裕量系数 Kn
+  double transEfficiency   = 7;   // 传动效率 ηt
+  double minEfficiency     = 8;   // 最低效率要求 ηmin
+}
+
+// 单工况管道计算结果
+message PeriodResult {
+  double flowRate          = 1;   // 计算风量 (m³/s)
+  double pressure          = 2;   // 计算风压 (Pa)
+  double resistance        = 3;   // 管道阻力系数 R (N·s²/m⁸)
+}
+
+// 风机性能曲线数据点（额定转速下）
+message CurvePoint {
+  double q   = 1;   // 风量 (m³/s)
+  double h   = 2;   // 风压 (Pa)
+  double eta = 3;   // 效率 (0~1)
+}
+
+// 风机绘图数据：包含绘制特性曲线所需的原始数据
+message FanPlotData {
+  repeated CurvePoint curvePoints = 1;  // 额定转速下的性能曲线数据点
+  double ratedRpm          = 2;   // 额定转速 (r/min)，相似律计算基准
+  double rpmMin            = 3;   // 最低转速 (r/min)，变频范围下限
+  double rpmMax            = 4;   // 最高转速 (r/min)，变频范围上限
+}
+
+// 候选风机：通过筛选的风机及其运行参数
+message CandidateFan {
+  string modelId           = 1;   // 风机型号，如 FBCDZ(B)-6-No22
+  double ratedRpm          = 2;   // 额定转速 (r/min)
+  double motorPower        = 3;   // 单台电机功率 (kW)
+  int32  motorCount        = 4;   // 电机数量
+  double flowEasy          = 5;   // 容易时期工作点风量 (m³/s)
+  double pressEasy         = 6;   // 容易时期工作点风压 (Pa)
+  double flowHard          = 7;   // 困难时期工作点风量 (m³/s)
+  double pressHard         = 8;   // 困难时期工作点风压 (Pa)
+  double efficiencyEasy    = 9;   // 容易时期效率 (0~1)
+  double efficiencyHard    = 10;  // 困难时期效率 (0~1)
+  double shaftPowerEasy    = 11;  // 容易时期轴功率 (kW)
+  double shaftPowerHard    = 12;  // 困难时期轴功率 (kW)
+  double requiredPower     = 13;  // 所需电机功率 (kW)
+  double speedRatio        = 14;  // 转速比 (容易/困难)
+  double rpmEasy           = 15;  // 容易时期转速 (r/min)
+  double rpmHard           = 16;  // 困难时期转速 (r/min)
+  double powerMargin       = 17;  // 功率余量 (%)
+  double score             = 18;  // 综合评分 (0~1，越大越优)
+  FanPlotData plotData     = 19;  // 绘图数据（曲线点 + 转速范围）
+  double baseFlowEasy      = 20;  // 基准点风量-容易 (m³/s)，额定曲线与管道线交点
+  double basePressEasy     = 21;  // 基准点风压-容易 (Pa)
+  double baseFlowHard      = 22;  // 基准点风量-困难 (m³/s)
+  double basePressHard     = 23;  // 基准点风压-困难 (Pa)
+  double bladeAngleDeg     = 24;  // 扇叶角度 (deg)
+  double railWidthMm       = 25;  // 抽出式轨道宽度 (mm)
+  string imagePath         = 26;  // 风机图片相对路径
+  string manufacturer      = 27;  // 制造厂家
+  string productName       = 28;  // 产品名称
+  string productSpec       = 29;  // 产品型号规格
+  string motorModel        = 30;  // 电动机型号
+  string factoryNo         = 31;  // 出厂编号
+}
+
+// 选型响应
+message FanSelectionResponse {
+  int32  code              = 1;   // 状态码：200 表示成功
+  string msg               = 2;   // 响应消息
+  PeriodResult easy        = 3;   // 容易时期计算结果
+  PeriodResult hard        = 4;   // 困难时期计算结果
+  int32  totalFans         = 5;   // 数据库风机总数
+  int32  screenedOut       = 6;   // 初筛淘汰数
+  int32  rejectedByEff     = 7;   // 效率不达标淘汰数
+  repeated CandidateFan candidates = 8;  // 候选列表，按 score 降序排列
+  repeated string steps    = 9;   // 计算日志
+}
+
+// 风机选型服务
+service FanSelectorService {
+  rpc SelectFan(FanSelectionRequest) returns (FanSelectionResponse);
+}

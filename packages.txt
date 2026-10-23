@@ -1,0 +1,8 @@
+cmake
+g++
+make
+libgrpc++-dev
+libprotobuf-dev
+protobuf-compiler
+protobuf-compiler-grpc
+libsqlite3-dev
