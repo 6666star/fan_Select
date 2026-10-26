@@ -223,7 +223,7 @@ th{{background:#eef4fb}} .meta{{text-align:center;color:#666}} .step{{border-lef
 .image-note{{color:#777}}
 section.stage{{break-inside:auto}} p{{orphans:3;widows:3}}
 @media print{{html,body{{width:180mm;max-width:180mm;margin:0}} body{{print-color-adjust:exact;-webkit-print-color-adjust:exact}} .step{{break-inside:avoid-page}} .notice{{break-inside:avoid-page}}}}</style></head><body>
-<h1>矿井通风机选型计算书</h1><p class="meta">软件版本：V7　生成时间：{generated_at:%Y-%m-%d %H:%M:%S}</p>
+<h1>矿井通风机选型计算书</h1><p class="meta">软件版本：V4　生成时间：{generated_at:%Y-%m-%d %H:%M:%S}</p>
 <h2>1. 输入参数与管网计算</h2>
 <h3>输入参数</h3>
 <table><tr><th>参数</th><th>容易时期</th><th>困难时期</th></tr>
